@@ -20,7 +20,11 @@ class MeetingController extends Controller
         $service = new MeetingService;
 
         //add any parameters you wish
-        if ($service->scheduleMeeting())
+        $meeting = new Meeting();
+        $meeting->start_time = $request->date_from;
+        $meeting->end_time = $request->date_to;
+        $meeting->meeting_name = $request->name;
+        if ($service->scheduleMeeting($meeting, $request->users))
         {
             return response()->json(["message" => "The meeting has been booked"]);
         }
